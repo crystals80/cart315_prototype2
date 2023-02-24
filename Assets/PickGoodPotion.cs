@@ -5,14 +5,30 @@ using TMPro;
 
 public class PickGoodPotion : MonoBehaviour
 {
-    public AudioClip pickupCoin;
-    public TextMeshProUGUI Counter;
+    public int count = 0;
+    public GameObject particlePrefab;
 
-    void OnTriggerEnter(Collider other)
+    // Start is called before the first frame update
+    void Start()
     {
-        AudioSource.PlayClipAtPoint(pickupCoin, transform.position);
-        int score = int.Parse(Counter.text) + 1;
-        Counter.text = score.ToString();
-        Destroy(gameObject);
+
+    }
+
+    // Update is called once per frame
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("hit");
+        if (collision.collider.gameObject.CompareTag("pickup"))
+        {
+            GameObject.Instantiate(particlePrefab, gameObject.transform.position, Quaternion.identity);
+
+            GameObject.Destroy(collision.collider.gameObject);
+
+            count++; // or count = count + 1;
+
+            this.GetComponent<AudioSource>().Play();
+
+            Debug.Log("Pick-Up Count" + count);
+        }
     }
 }
