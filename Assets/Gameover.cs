@@ -1,0 +1,16 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Gameover : MonoBehaviour
+{
+    void OnCollisionEnter()
+    {
+        GetComponent<AudioSource>().Play();
+        Invoke("Reload", 1.59f);
+    }
+    void Reload()
+    {
+        Application.LoadLevel(Application.loadedLevel);
+    }
+}
